@@ -328,16 +328,6 @@ Handle<Value> QWidgetWrap::SetObjectName(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-Handle<Value> QWidgetWrap::WinId(const Arguments& args) {
-  HandleScope scope;
-
-  QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
-  QWidgetImpl* q = w->GetWrapped();
-
-  q->winId();
-
-  return scope.Close(Undefined());
-}
 
 //
 // QUIRK:
@@ -528,3 +518,13 @@ Handle<Value> QWidgetWrap::Y(const Arguments& args) {
 
   return scope.Close(Integer::New(q->y()));
 }
+
+Handle<Value> QWidgetWrap::WinId(const Arguments& args) {
+  HandleScope scope;
+
+  QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
+  QWidgetImpl* q = w->GetWrapped();
+
+  return scope.Close(Integer::New(q->winId()));
+}
+
