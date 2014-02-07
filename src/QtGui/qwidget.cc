@@ -212,6 +212,8 @@ void QWidgetWrap::Initialize(Handle<Object> target) {
       FunctionTemplate::New(X)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewSymbol("y"),
       FunctionTemplate::New(Y)->GetFunction());
+  tpl->PrototypeTemplate()->Set(String::NewSymbol("winId"),
+      FunctionTemplate::New(WinId)->GetFunction());
 
   // Events
   tpl->PrototypeTemplate()->Set(String::NewSymbol("paintEvent"),
@@ -322,6 +324,17 @@ Handle<Value> QWidgetWrap::SetObjectName(const Arguments& args) {
   QWidgetImpl* q = w->GetWrapped();
 
   q->setObjectName(qt_v8::ToQString(args[0]->ToString()));
+
+  return scope.Close(Undefined());
+}
+
+Handle<Value> QWidgetWrap::WinId(const Arguments& args) {
+  HandleScope scope;
+
+  QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
+  QWidgetImpl* q = w->GetWrapped();
+
+  q->winId();
 
   return scope.Close(Undefined());
 }
